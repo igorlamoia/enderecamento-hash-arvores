@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define TAMANHO 31 //Tamanho da lista (posições)
-#define TAM 100000 // Quantidade de números N dentro da lista
+#define TAMANHO 31 //Tamanho da lista (posições => P)
+#define TAM 100000 // Quantidade de números N dentro da lista (numeros => N)
 
 // Range de números aleatórios, tem que ser maior que a quantidade de números para não repetir
 #define MIN 1
