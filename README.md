@@ -1,4 +1,10 @@
-# O trabalho visa: Desenvolver um Hash com calculos lineares e quadráticos
+# Computando o tempo total de inserção, busca e remoção dos elementos existentes nos vetores. 
+- Utilizando Hash com calculos lineares e quadráticos
+- Utilizando Endereço aberto e Listas Encadeadas
+- Implementando o algoritmo árvore binária de busca (sem função de balanceamento) 
+- Implementando uma árvore binária de busca balanceada (AVL)
+
+
 Trabalho para disciplina de Classificação e Pesquisa de dados CEFET-MG (Leopoldina)
 
  ## Lista encadeada com P posições (N > P)
