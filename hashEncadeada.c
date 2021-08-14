@@ -1,15 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define TAMANHO 30 //Tamanho da lista (posições)
-#define PRIMO 31
-#define TAM 10 // Quantidade de números N
+#define TAMANHO 31 //Tamanho da lista (posições)
+#define TAM 100000 // Quantidade de números N dentro da lista
 
-// Range de números aleatórios
+// Range de números aleatórios, tem que ser maior que a quantidade de números para não repetir
 #define MIN 1
-#define MAX 200
-// Quantidade de números aleatórios
-#define QTDE 100000 //precisa ser menor que MAX
+#define MAX 10000000
 
 typedef struct no
 {
@@ -23,21 +20,36 @@ typedef struct
   int tamanho;
 } Lista;
 
-void inicializarLista(Lista *lista);
-void inserir_na_lista(Lista *lista, int valor);
-int buscar_na_lista(Lista *lista, int valor);
-void imprimir_lista(Lista *lista);
-void inicializarTabela(Lista t[]);
-void inserir(Lista lista[], int valor);
-int busca(Lista lista[], int chave);
-void imprimir(Lista lista[]);
-int funcaoHash(int chave);
-void shuffle(int *array);
+// imprime o Menu de opcoes
 void menu();
+// Seta inicio -> null e tamanho Zero
+void inicializarLista(Lista *lista);
+// Utiliza o inicializarLista enquanto a posição for menor que TAMANHO
+void inicializarTabela(Lista t[]);
+// Usando uma variável uma lista auxiliar, começa a imprimir do primeiro ao último, enquanto existir nó
+void imprimir_lista(Lista *lista);
+// Imprimi => (int) posição da lista: (int) quatidade de valores na posição = (array de inteiros) valores[].
+// Pra cada posição da lista, utiliza o método imprimir_lista para ir até o final de cada posição
+void imprimir(Lista lista[]);
+
+// Realiza o calculo: chave % TAMANHO, retorna o valor calculado (também chamado de Espalhamento)
+int funcaoHash(int chave); //
+// Cria novo nó, o próximo do novo aponta pro início, e o início se torna o novo nó (ou seja, insere no início da lista)
+void inserir_na_lista(Lista *lista, int valor);
+// Utiliza o retorno do método funcaoHash como id (posição) para inserir_na_lista
+void inserir(Lista lista[], int valor);
+
+// Retorna valor procurado caso ache, ou ZERO caso não encontra (O array terá apenas números != de ZERO)
+int buscar_na_lista(Lista *lista, int valor);
+// Utiliza o retorno do método funcaoHash como id (posição) para buscar_na_lista
+int busca(Lista lista[], int chave);
+
+// Método Fisher–Yates shuffle, basicamente não deixa repetir números aleatórios
+void aleatoriosNaoRepetidos(int *array);
 
 int main()
 {
-  int opcao, vetor[TAM];
+  int opcao;
   Lista tabela[TAMANHO];
   double start, stop, elapsed;
   inicializarTabela(tabela);
@@ -56,7 +68,7 @@ int main()
       {
         numeros[i] = i + MIN;
       }
-      shuffle(numeros);
+      aleatoriosNaoRepetidos(numeros);
       start = (double)clock() / CLOCKS_PER_SEC;
       for (int i = 0; i < TAM; i++)
       {
@@ -87,9 +99,8 @@ void menu()
 {
   printf("\t\t\n-------------Menu-------------");
   printf("\t\t\n|1- Inserir                   |");
-  printf("\t\t\n|2- Buscar                    |");
-  printf("\t\t\n|3- Imprimir                  |");
-  printf("\t\t\n|4- Sair                      |");
+  printf("\t\t\n|2- Imprimir                  |");
+  printf("\t\t\n|3- Sair                      |");
   printf("\t\t\n------------------------------\n\n");
 }
 
@@ -171,10 +182,10 @@ void imprimir(Lista lista[])
 
 int funcaoHash(int chave)
 {
-  return chave % PRIMO;
+  return chave % TAMANHO;
 }
 
-void shuffle(int *array)
+void aleatoriosNaoRepetidos(int *array)
 {
   for (int i = MAX - MIN - 1; i > 0; i--)
   {
